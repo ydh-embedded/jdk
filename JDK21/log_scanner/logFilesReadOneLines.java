@@ -36,7 +36,7 @@ public class logFilesReadOneLines {
 
         try {
 
-            for (int lineNumber =1 ; scanner.hasNextLine() ; lineNumber++) {
+            for (int lineNumber =1 ; scanner.hasNextLine() == true ; lineNumber++) {
 
                 String line = scanner.nextLine() ;
                 formatLogLine(lineNumber , line );
