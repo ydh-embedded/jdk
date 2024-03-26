@@ -11,10 +11,7 @@ public class FibonacciSequence {
             long[] fib = countFibos(n);
             String numeral = getNumeral(n);
 
-            for (int i = 0; i < n; i++) {
-                System.out.printf("[#%d : %s], ", i + 1, fib[i]);
-            }
-            System.out.printf("#%d%s number of Fibonacci Sequence: %d\n", n, numeral, fib[n - 1]);
+            printFibos(n, fib, numeral);
 
             long endTime = System.nanoTime();
             long duration = (endTime - startTime) / 1_000_000;
@@ -22,6 +19,13 @@ public class FibonacciSequence {
         } else {
             System.out.println("Programmaufruf: 'java FibonacciSequence n'");
         }
+    }
+
+    private static void printFibos(int n, long[] fib, String numeral) {
+        for (int i = 0; i < n; i++) {
+            System.out.printf("[#%d : %s]\n", i + 1, fib[i]);
+        }
+        System.out.printf("#%d%s number of Fibonacci Sequence: %d\n", n, numeral, fib[n - 1]);
     }
 
     private static long[] countFibos(int n) {
