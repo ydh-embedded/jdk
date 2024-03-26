@@ -28,7 +28,7 @@ Hier ist ein Beispiel für die Initialisierung und den Druck der Werte eines dre
             {{10, 20, 30},{20, 40, 60}}, 
             { {10, 30,50,70},{50},{80, 90}} 
         };
-        System.out.println("Multidimensional Array (3-d) is as follows:");
+        System.out.println("Multidimensional Array (3D) is as follows:");
         // use for..each loop to iterate through elements of 3d array
         for (int[][] array_2D: intArray) {
             for (int[] array_1D: array_2D) {
@@ -42,3 +42,12 @@ Hier ist ein Beispiel für die Initialisierung und den Druck der Werte eines dre
     }
 }
  ```
+
+Ausgabe:
+
+ ```java
+    	Multidimensional Array (3D) is as follows:
+            
+            10      20      30
+
+ 
