@@ -38,7 +38,12 @@ Hier ist eine Aufschlüsselung des Codes:
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
+
 ```
+
+
+
 
 
 -   Wir definieren die Hauptklasse FiboPrimeNew und die``` main ``` Methode.
@@ -49,7 +54,7 @@ Wenn mehr als ein Argument oder garkein Argumente angegeben wurde, dann zeigengr
 
 
 
-## private static boolean isPrime(BigDecimal fibonacci) Methode
+## boolean isPrime(BigDecimal fibonacci) Methode
 
 -   Wir überprüfen, ob das Argument(Eingabe) eine Primzahl ist.
 -   Mit der Schleife teilen wir durch 2 bis der Hälfte der Zahl.
@@ -61,6 +66,9 @@ Wenn mehr als ein Argument oder garkein Argumente angegeben wurde, dann zeigengr
 
 
 ```java
+
+
+
     private static boolean isPrime(BigDecimal fibonacci) {
         
         BigDecimal divisor = BigDecimal.valueOf(2);
@@ -90,9 +98,14 @@ Wenn mehr als ein Argument oder garkein Argumente angegeben wurde, dann zeigengr
         }
         return true;
     }
+
+
+
 ```
 
 ## countFibonacci(...) Methode
+
+
 
 -   zur Berechnung der Fibonacci-Sequenz bis zur angegebenen Größe.
 -   wir initialisieren die ersten beiden Fibonacci-Zahlen (0 und 1).
@@ -101,7 +114,12 @@ Wenn mehr als ein Argument oder garkein Argumente angegeben wurde, dann zeigengr
 -   Wir überprüfen, ob die neue Fibonacci-Nummer eine Primzahl ist
     und zeigen Sie als Ergebnis an.
 
+
 ```java
+
+
+
+
     private static void countFibonacci(int size, BigDecimal[] fibonacci) {
         fibonacci[0] = new BigDecimal("1");      //NOTE #1
         System.out.printf("[#%d%s : %s] \n", 1, checkNumeral(1),fibonacci[0]);
@@ -125,6 +143,19 @@ Wenn mehr als ein Argument oder garkein Argumente angegeben wurde, dann zeigengr
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 ## checkNumeral(int n) Methode
