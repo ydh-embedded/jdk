@@ -917,8 +917,151 @@ System.out.printf(<span class="hljs-string">"Zweite eingelesene Zahl ist %d\n"</
     System.out.printf(<span class="hljs-string">"Weitere Daten: %s\n"</span>, s.next());
 }
 </div></code></pre>
+<p>Wenn man den Nutzer auf dem Terminal dazu auffordert, etwas einzugeben, dann kann es unter Umständen passieren, dass er mehrere <em>Tokens</em> (durch Delimiter getrennte Zeichenfolgen) eintippt. Die <code>next</code> Methoden des Scanners würden dann nicht an jeder Stelle blockieren, sondern automatisch das nächste Token einlesen. Um das zu vermeiden, kann man zum Beispiel <code>nextLine</code> mit explizitem Parsing verwenden. Beispiel:</p>
+<pre class="hljs"><code><div>String input;
+System.out.print(<span class="hljs-string">"Gib eine Zahl ein: "</span>);
+input = scanner.nextLine();
+<span class="hljs-keyword">int</span> firstNumber = Integer.parseInt(input);
+System.out.print(<span class="hljs-string">"Gib eine zweite Zahl ein: "</span>);
+<span class="hljs-comment">// Gesamte Zeile einlesen</span>
+input = scanner.nextLine();
+<span class="hljs-comment">// Manuell in int parsen.</span>
+<span class="hljs-keyword">int</span> secondNumber = Integer.parseInt(input);
+<span class="hljs-keyword">int</span> sum = firstNumber + secondNumber;
+System.out.printf(<span class="hljs-string">"%d + %d = %d!\n"</span>, firstNumber, secondNumber, sum);
+</div></code></pre>
+<p><strong>Achtung:</strong> Der Scanner berücksichtigt die aktuell eingestellten regionalen Einstellungen (<em>Locale</em>). Die herkömmlichen <code>parse</code> Methoden (wie z.B. <code>Double.parseDouble</code>) berücksichtigen keine regionalen Einstellungen! Die Locale kann für den Scanner konfiguriert werden:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> scanner = <span class="hljs-keyword">new</span> Scanner(System.in);
+scanner.useLocale(Locale.GERMANY);
+<span class="hljs-comment">// Scanner berücksichtigt die Locale. Hier wird</span>
+<span class="hljs-comment">// ein Komma als Dezimaltrenner erwartet, da GERMANY</span>
+<span class="hljs-comment">// eingestellt ist.</span>
+<span class="hljs-keyword">double</span> value = scanner.nextDouble();
+<span class="hljs-comment">// parseDouble berücksichtigt keine Locale. Hier ist der</span>
+<span class="hljs-comment">// Dezimaltrenner immer ein Punkt (.)</span>
+value = Double.parseDouble(<span class="hljs-string">"123.456"</span>); 
+<span class="hljs-comment">// printf verwendet die per Default eingestellte Locale.</span>
+<span class="hljs-comment">// In Deutschland würde die Gleitkommazahl mit Dezimaltrenner ,</span>
+<span class="hljs-comment">// ausgegeben werden. Um die Locale explizit festzulegen,</span>
+<span class="hljs-comment">// kann man als erstes Argument die Locale vorgeben. Hier US.</span>
+System.out.printf(Locale.US, <span class="hljs-string">"%f"</span>, <span class="hljs-number">2.56</span>); <span class="hljs-comment">// 2.56</span>
+System.out.printf(Locale.GERMANY, <span class="hljs-string">"%f"</span>, <span class="hljs-number">2.56</span>); <span class="hljs-comment">// 2,56</span>
+</div></code></pre>
 <p>Funktionsweise des Scanners als Diagramm:</p>
 <p><img src="../diagrams/how-a-scanner-works.svg" alt=""></p>
+<h1 id="dateien-einlesen">Dateien einlesen</h1>
+<p>In den Packages <code>java.io</code>, <code>java.nio.file</code> und <code>java.nio</code> befinden sich zahlreiche Klassen, um Dateien und Verzeichnisse zu verwalten.</p>
+<p>Um den Inhalt einer Textdatei einzulesen, kann man die Klasse <code>Files</code> verwenden in Kombination mit der Klasse <code>Path</code> und <code>StandardCharsets</code>. Beispiel:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> java.nio.file.Files;
+<span class="hljs-keyword">import</span> java.nio.file.Path;
+<span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;
+
+<span class="hljs-comment">// Erstelle den relativen Pfad ".\data\contacts.txt"</span>
+<span class="hljs-comment">// Hinweis: Es wird nicht geprüft, ob dieser Pfad</span>
+<span class="hljs-comment">// tatsächlich im Dateisystem existiert!</span>
+Path pathToFile = Path.of(<span class="hljs-string">"data"</span>, <span class="hljs-string">"contacts.txt"</span>);
+<span class="hljs-comment">// Lies gesamten Inhalt der Datei und gehe davon aus,</span>
+<span class="hljs-comment">// dass die Zeichenkodierung UTF-8 für den Inhalt</span>
+<span class="hljs-comment">// verwendet wurde.</span>
+String fileContent = Files.readString(pathToFile, StandardCharsets.UTF_8);
+</div></code></pre>
+<p>Methoden, die auf Dateien zugreifen, können in den meisten Fällen <code>IOExceptions</code> auslösen. Solche Exceptions sind <em>checked</em> und müssen deshalb abgefangen werden. Beispiel:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> java.nio.file.Files;
+<span class="hljs-keyword">import</span> java.nio.file.Path;
+<span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.nio.file.AccessDeniedException;
+<span class="hljs-keyword">import</span> java.nio.file.NoSuchFileException;
+
+<span class="hljs-keyword">try</span> {
+    Path pathToFile = Path.of(<span class="hljs-string">"data"</span>, <span class="hljs-string">"contacts.txt"</span>);
+    String logContent = Files.readString(pathToFile, StandardCharsets.UTF_8);
+} <span class="hljs-keyword">catch</span> (AccessDeniedException e) {
+    System.err.printf(<span class="hljs-string">"Kein Lesezugriff.\n"</span>);
+} <span class="hljs-keyword">catch</span> (NoSuchFileException e) {
+    System.err.printf(<span class="hljs-string">"Datei existiert nicht.\n"</span>);
+} <span class="hljs-keyword">catch</span> (IOException ioe) {
+    System.err.printf(<span class="hljs-string">"Irgendein anderer Input/Output Fehler\n"</span>);
+}
+</div></code></pre>
+<h1 id="unterschied-zwischen-referenzdatentypen-und-primitiven-datentypen">Unterschied zwischen Referenzdatentypen und primitiven Datentypen</h1>
+<p>Wenn wir einen Wert primitiven Datentyps in einer Variablen speichern, dann enthält diese Variable den vollständigen Wert. Kopiert man nun diese Variable in eine andere Variable, so wird der Wert vollständig kopiert.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">123</span>;
+<span class="hljs-comment">// Der Wert 123 wird nach b kopiert.</span>
+<span class="hljs-keyword">int</span> b = a;
+<span class="hljs-comment">// b ist vollständige Kopie von a.</span>
+b++;
+<span class="hljs-comment">// a ist weiterhin 123</span>
+<span class="hljs-comment">// b ist nun 124.</span>
+</div></code></pre>
+<p>Erstellen wir eine Variable mit einem Referenzdatentyp, dann speichert diese Variable nicht ein Datenobjekt, sondern lediglich einen Verweis auf ein Datenobjekt. Man kann sich eine Referenz wie eine Speicheradresse oder ID vorstellen. Kopiert man nun diese sogenannte Referenzvariable in eine andere, dann wird also nicht das referenzierte Objekt kopiert, sondern lediglich die Referenz. Dadurch verweisen nun Originalvariable und Kopievariable auf dasselbe Objekt im Speicher.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Variable name enthält _nicht_ das StringBuilder-Objekt,</span>
+<span class="hljs-comment">// sondern nur einen Verweis auf dieses Objekt.</span>
+<span class="hljs-keyword">var</span> name = <span class="hljs-keyword">new</span> StringBuilder(<span class="hljs-string">"Bob"</span>);
+<span class="hljs-comment">// Indem wir name nach copy kopieren, kopieren wir lediglich</span>
+<span class="hljs-comment">// die Referenz. copy und name verweisen nun auf dasselbe</span>
+<span class="hljs-comment">// StringBuilder-Objekt.</span>
+StringBuilder copy = name;
+
+System.out.println(name); <span class="hljs-comment">// Bob</span>
+System.out.println(copy); <span class="hljs-comment">// Bob</span>
+name.append(<span class="hljs-string">" Ross"</span>);
+System.out.println(name); <span class="hljs-comment">// Bob Ross</span>
+System.out.println(copy); <span class="hljs-comment">// Bob Ross</span>
+</div></code></pre>
+<p>Rufen wir eine Methode auf, dann werden die Argumente in die zugehörigen Parameter kopiert. Im Falle von primitiven Werten, entsteht dabei eine vollständige Kopie. Falls Referenzen kopiert werden, kann die aufgerufene Methode über diese Referenz auf das Datenobjekt direkt zugreifen. Sie erhält also keine Kopie eines Datenobjekts.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>[] primes = { <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span> };
+<span class="hljs-comment">// Variable primes wird in Parameter numbers der Methode modify</span>
+<span class="hljs-comment">// kopiert. Dadurch erlangt modify direkten Zugriff auf das</span>
+<span class="hljs-comment">// Array primes.</span>
+modify(primes);
+<span class="hljs-comment">// Gibt aus: [111, 3, 5, 7, 11]</span>
+System.out.println(Arrays.toString(primes));
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] numbers)</span> </span>{
+    numbers[<span class="hljs-number">0</span>] = <span class="hljs-number">111</span>;
+}
+</div></code></pre>
+<p>Die Übergabe von Argumenten an Methoden geschieht in Java stets <em>by value</em>. Der Wert wird also in den Parameter kopiert.</p>
+<p>Fälschlicherweise wird oft behauptet, Java unterstütze <em>Pass by Reference</em>. Pass by Reference hieße, dass ein Parameter Alias / Repräsentant einer anderen Variable sein darf.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>[] primes = { <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span> };
+modify(primes);
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] numbers)</span> </span>{
+    <span class="hljs-comment">// Da Argumente by Value übergeben werden,</span>
+    <span class="hljs-comment">// ist numbers lediglich Kopie von primes.</span>
+    <span class="hljs-comment">// Weisen wir numbers ein neues Array Objekt</span>
+    <span class="hljs-comment">// zu, hat dies keine Auswirkung auf primes.</span>
+    numbers = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[] { <span class="hljs-number">13</span>, <span class="hljs-number">17</span>, <span class="hljs-number">19</span>, <span class="hljs-number">23</span> };
+}
+
+<span class="hljs-comment">// Gäbe es eine Art "Pass By Reference" in Java</span>
+<span class="hljs-comment">// könnte man primes direkt mittels numbers "umlenken"</span>
+<span class="hljs-comment">// auf ein anderes Array-Objekt. Pseudo Code:</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(ref <span class="hljs-keyword">int</span>[] numbers)</span> </span>{
+    <span class="hljs-comment">// hier würde indirekt stehen: primes = new int[] { 1, 2, 3}</span>
+    numbers = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[] { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>}
+}
+</div></code></pre>
+<h1 id="arrays-kopieren">Arrays kopieren</h1>
+<p>Kopieren wir einen Array, dessen Elemente primitiv sind (z.B. int, double), so ist die Kopie völlig isoliert vom Original.</p>
+<p>Kopieren wir jedoch einen Array, dessen Elemente Referenzen sind (z.B. String, StringBuilder), so ist die Kopie nur teilweise vom Original isoliert. Die &quot;Zellen&quot; des Originals und der Kopie verweisen nämlich auf diesselben Datenobjekte im Speicher. Einerseits ist dadurch das Kopieren schnell erledigt, andererseits birgt das aber auch Gefahren, wenn man die referenzierten Objekte modifiziert.</p>
+<p><img src="../diagrams/shallow-copy-of-array.svg" alt=""></p>
+<p>Würde man eine vollständig isolierte Kopie erzeugen wollen, müsste man auch die von den Zellen referenzierten Datenobjekte kopieren. Das ist aber weder bei <code>clone</code> noch bei <code>Arrays.copyOf</code> der Fall.</p>
+<h1 id="zweidimensionale-arrays">Zweidimensionale Arrays</h1>
+<p>Java unterstützt nur eindimensionale Arrays. Möchte man mehrere Dimensionen abbilden, kann man Arrays ineinander schachteln. Ein zweidimensionaler Array ist letztlich nur ein eindimensionaler Array, dessen Elemente ebenfalls Arrays sind.</p>
+<p><img src="../diagrams/2d-array-example.svg" alt=""></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>[][] table = {
+    { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> },
+    { <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span> },
+    { <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span> },
+};
+<span class="hljs-comment">// Datentyp von table ist int[3][].</span>
+<span class="hljs-comment">// Datentyp von table[0] ist int[4].</span>
+<span class="hljs-comment">// Datentyp von table[1] ist int[5].</span>
+<span class="hljs-comment">// Datentyp von table[2] ist int[3].</span>
+<span class="hljs-comment">// Datentyp von table[2][1] ist int.</span>
+</div></code></pre>
 
 </body>
 </html>
