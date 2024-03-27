@@ -1,14 +1,23 @@
-$outputDirectory = "out" ;
-# wenn die output date existiert wird diese gelöscht
-if (Test-Path $outputDirectory){
-    
-    Remove-Item-Recurse $outputDirectory ;
+$outputDirectory = "out"
+# Wenn das Output-Directory existiert, lösche es.
+if (Test-Path $outputDirectory) {
+    Remove-Item -Recurse -Force $outputDirectory
 }
-                                                             #NOTE Verzeichnisslisten werden in Linux mit einem : Doppelpunkt getrennt
-$javaClassPath= ".;$outputDirectory;C:\dev\my-library.jar"  #NOTE Verzeichnisslisten wird mit dem SemiKolon getrennt
 
-javac -d $outputDirectory --class-path $javaClassPath MainApp.java ;        #NOTE Wir kompilieren das PRG und legen es ins Output-Verzeichniss
+# Der Java Class Path legt fest, in welchen Verzeichnissen
+# der Compiler bzw. die Java Runtime nach Packages
+# suchen soll. Der Class Path ist eine Liste von
+# Pfaden, getrennt durch Semikolons (in Linux/Mac nutzt man : als Trenner).
+# Bemerkung: Auch Pfade zu JARs (Java Archives) können hier
+# angegeben werden.
+# Bemerkung: Der Pfad . bedeutet "aktuelles Arbeitsverzeichnis".
+$javaClassPath = ".;$outputDirectory;C:\dev\my-library.jar"
 
-if ($? -eq $true ) {
-    java --class-path $javaClassPath MainApp ;
+# Kompiliere das Programm und lege die Kompilate im Output-Verzeichnis ab.
+javac -d $outputDirectory --class-path $javaClassPath MainApp.java;
+
+# Wenn der Compiler keine Fehler festgestellt hat, führen wir unser
+# Programm mit dem Java Launcher aus.
+if ($? -eq $True) {
+    java --class-path $javaClassPath MainApp
 }
