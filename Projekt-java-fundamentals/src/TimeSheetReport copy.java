@@ -53,8 +53,11 @@ public class TimeSheetReport {
   // #NOTE Return the number of days in a month.
   // Leap years are taken into account.
   public static int daysOfMonth(int year, int month) {
-    
-    throw new RuntimeException("Not implemented yet");
+    if (args.length < 1  )
+        throw new RuntimeException("Not implemented yet");
+    else {
+      
+    }
   }
 
   // #NOTE Return a string in the format hh:mm.

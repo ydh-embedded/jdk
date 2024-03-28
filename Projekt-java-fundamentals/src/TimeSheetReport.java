@@ -51,36 +51,88 @@ public class TimeSheetReport {
   }
 
   public static int daysOfMonth(int year, int month) {
-    throw new RuntimeException("Not implemented yet");
+
+    if (args.length < 1  )
+        throw new RuntimeException("Not implemented yet");
+    else {
+
+        int y   = new year  ;
+        int m   = new month ;
+     String num =   ''      ;
+        
+        if (args.length > 0) {
+            int num = Integer.parseInt (args[0]);
+
+            return;
+        }
+    }
+
   }
 
   public static String formatTime(int hours, int minutes) {
-    throw new RuntimeException("Not implemented yet");
+    if (args.length < 1  )
+        throw new RuntimeException("The method formatTime not running [ Line: 72 ]");
+    else {
+      StringBuilder   formatTime = new StringBuilder() ;
+
+      String sH     = formatTime.append(hours)         ;
+      String sM     = formatTime.append(minutes)       ;
+
+      String sTime  = formatTime.append(sH)            ;
+      String sTime  = formatTime.append(sM)            ;
+
+      if (sH < 10) {
+          formatTime.append("0")    ;
+      }
   }
 
   public static String formatDate(int year, int month, int day) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method formatDate not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static String formatDuration(int totalMinutes) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method formatDuration not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static String pad(String s, int minLength, boolean prepend) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method pad not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static String padStart(String s, int minLength) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method padStart not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static String padEnd(String s, int minLength) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method padEnd not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static int durationInMinutes(int startHours, int startMinutes, int endHours, int endMinutes) {
-    throw new RuntimeException("Not implemented yet");
-  }
+  }    if (args.length < 1  )
+        throw new RuntimeException("The method durationInMinutes not running [ Line:  ]");
+    else {
+
+
+    }
 
   public static void printLine(int lineNumber, String date, int startHours, int startMinutes, int endHours, int endMinutes) {
 
@@ -91,21 +143,23 @@ public class TimeSheetReport {
         int startHours    = scanner.next();
         int startMinutes  = scanner.next();
         int endHours      = scanner.next();
+        int endMinutes    = scanner.next();
         String message    = scanner.nextLine();
-        
-//#region // #NOTE  <HEADER>
+
+
+   //#region // #NOTE  <HEADER>
         System.out.println(THICK_BORDER);
         System.out.println("YEAR: 2024 / MONTH: 03 / ID: WE007");
         System.out.println(THICK_BORDER);
 //#endregion
 
-//#region // #NOTE   <MAIN> 
+   //#region // #NOTE   <MAIN> 
         System.out.printf(
-            "%s"  + "%s"+ "%d"+ "%s"+ "%d"+ "%s"+ "%d"+ "%s"+ "%s"+ "%s"+ "(Zeile: %02d)\n"
-          , date, PIPE , startHours, PIPE , startMinutes, PIPE , endHours, PIPE , message, PIPE , lineNumber);
+            "%s"  + "%s" + "%d"+ "%s"        + "%d"+ "%s"         + "%d"+ "%d" + "%s"     + "%s"+ "%s"    + "(Zeile: %02d)\n"
+          , date, PIPE   , startHours, PIPE  , startMinutes, PIPE , endHours, endMinutes, PIPE , message, PIPE , lineNumber);
 //#endregion 
 
-//#region // #NOTE  <Footer>
+   //#region // #NOTE  <Footer>
         System.out.println(THTHIN_BORDER);
 
 
