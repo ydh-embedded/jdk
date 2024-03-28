@@ -86,29 +86,39 @@ public class TimeSheetReport {
 
     var scanner = new Scanner(line);
 
-        System.out.println(THICK_BORDER);
-        System.out.println("YEAR: 2024 / MONTH: 03 / ID: WE007");
-        System.out.println(THICK_BORDER);
-
         int lineNumber    = scanner.next();
         String date       = scanner.next();
         int startHours    = scanner.next();
         int startMinutes  = scanner.next();
         int endHours      = scanner.next();
         String message    = scanner.nextLine();
-        System.out.println(THICK_BORDER);
         
-        System.out.printf("%s" + "%d" + "%d" + "%d" + "%s" + "(Zeile: %02d)\n", date, startHours, startMinutes, endHours, message, lineNumber);
-
-
-
+//#region // #NOTE  <HEADER>
         System.out.println(THICK_BORDER);
+        System.out.println("YEAR: 2024 / MONTH: 03 / ID: WE007");
+        System.out.println(THICK_BORDER);
+//#endregion
+
+//#region // #NOTE   <MAIN> 
+        System.out.printf(
+            "%s"  + "%s"+ "%d"+ "%s"+ "%d"+ "%s"+ "%d"+ "%s"+ "%s"+ "%s"+ "(Zeile: %02d)\n"
+          , date, PIPE , startHours, PIPE , startMinutes, PIPE , endHours, PIPE , message, PIPE , lineNumber);
+//#endregion 
+
+//#region // #NOTE  <Footer>
+        System.out.println(THTHIN_BORDER);
+
+
         System.out.printf("Meldung: %s\n", message.trim());
         System.out.println();
-        System.out.println(THICK_BORDER);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
 
+        System.out.println(THTHIN_BORDER);
         scanner.close();
-
+//#endregion
 
 
 
