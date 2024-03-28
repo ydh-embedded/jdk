@@ -75,6 +75,7 @@ public class TimeSheetReport {
     
 
   }
+
   // #STUB - <Uhrzeit>
   public static String formatTime(int hours, int minutes) {
 
@@ -86,74 +87,88 @@ public class TimeSheetReport {
         throw new RuntimeException("The method formatTime not running [ Line:  ]");
     else
     {
-      StringBuilder   formatTime = new StringBuilder() ;
+      StringBuilder   formattedTime = new StringBuilder() ;
 
-      if (iH < 10) { formatTime.append("0") ; }     //#NOTE Format: hh:
-                  formattedTime.append(iH)  ;
-                  formattedTime.append(":") ;
+      if (iH < 10) {  formattedTime.append("0") ; }     //#NOTE Format: hh:
+                      formattedTime.append(iH)  ;
+                      formattedTime.append(":") ;
 
-      if (iM < 10) { formatTime.append("0") ; }     //#NOTE Format: mm.
-                  formattedTime.append(iM)  ;
-                  formattedTime.append(".") ;
+      if (iM < 10) {  formattedTime.append("0") ; }     //#NOTE Format: mm.
+                      formattedTime.append(iM)  ;
+                      formattedTime.append(".") ;
 
-      if (iS < 10) { formatTime.append("0") ; }     //#NOTE Format: ss
-                  formattedTime.append(iS)  ;
-                  formattedTime.append("/n") ;
+      if (iS < 10) {  formattedTime.append("0") ; }     //#NOTE Format: ss
+                      formattedTime.append(iS)  ;
+                      formattedTime.append("/n") ;
     }
-    return formatTime.toString();
+    return formattedTime.toString();
 
   }
 
-  // #SECTION - String Datum DD.MM.YYYY
-  public static String formatDate(int year, int month, int day)
-    if ( args.length < 1 )
+  // #STUB - <Datum> DD.MM.YYYY
+  public static String formatDate(int year, int month, int day) {
+    if (args.length < 1  )
         throw new RuntimeException("The method formatDate not running [ Line:  ]");
     else
     {
+      StringBuilder   printDate = new StringBuilder() ;
 
+                      printDate.append(day)    ;     //#NOTE Format: DD.
 
+                      printDate.append(month)  ;     //#NOTE Format: MM.
+
+                      printDate.append(year)   ;     //#NOTE Format: YYYY
     }
-    return ;
+    return printDate.toString();
+  }
 
   public static String formatDuration(int totalMinutes) {
-  }    if (args.length < 1  )
+    if (args.length < 1  )
         throw new RuntimeException("The method formatDuration not running [ Line:  ]");
     else {
 
 
     }
+  }  
 
   public static String pad(String s, int minLength, boolean prepend) {
-  }    if (args.length < 1  )
+    if (args.length < 1  )
         throw new RuntimeException("The method pad not running [ Line:  ]");
     else {
 
 
     }
+  }
 
   public static String padStart(String s, int minLength) {
-  }    if (args.length < 1  )
+    if (args.length < 1  )
         throw new RuntimeException("The method padStart not running [ Line:  ]");
     else {
-
-
     }
+    
+  }
+
+
 
   public static String padEnd(String s, int minLength) {
-  }    if (args.length < 1  )
+    if (args.length < 1  )
         throw new RuntimeException("The method padEnd not running [ Line:  ]");
     else {
-
-
     }
+    
+  }
+
+
 
   public static int durationInMinutes(int startHours, int startMinutes, int endHours, int endMinutes) {
-  }    if (args.length < 1  )
+    if (args.length < 1  )
         throw new RuntimeException("The method durationInMinutes not running [ Line:  ]");
     else {
-
-
     }
+    
+  }
+
+
 
   public static void printLine(int lineNumber, String date, int startHours, int startMinutes, int endHours, int endMinutes) {
 
