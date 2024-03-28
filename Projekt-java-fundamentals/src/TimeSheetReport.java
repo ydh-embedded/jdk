@@ -50,23 +50,23 @@ public class TimeSheetReport {
     // close the time sheet and exit gracefully.
   }
 
-  // Return the number of days in a month.
+  // #NOTE Return the number of days in a month.
   // Leap years are taken into account.
   public static int daysOfMonth(int year, int month) {
     throw new RuntimeException("Not implemented yet");
   }
 
-  // Return a string in the format hh:mm.
+  // #NOTE Return a string in the format hh:mm.
   public static String formatTime(int hours, int minutes) {
     throw new RuntimeException("Not implemented yet");
   }
 
-  // Returns a formatted date of the form: dd.mm.yyyy.
+  // #NOTE Returns a formatted date of the form: dd.mm.yyyy.
   public static String formatDate(int year, int month, int day) {
     throw new RuntimeException("Not implemented yet");
   }
 
-  // Format given minutes in hours and seconds
+  // Format minutes in hours and minutes
   // and return these values as a string in the format
   // xxh yym. Example: 02h 15m
   public static String formatDuration(int totalMinutes) {
