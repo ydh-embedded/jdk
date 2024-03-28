@@ -53,8 +53,46 @@ public class TimeSheetReport {
   // #STUB -  <Datum>
   public static String daysOfMonth(int year, int month) {
 
-    if (args.length < 1  )
-        throw new RuntimeException("the method daysOfMonth is not running [Line: ]");
+    if (year < 1 || month < 1 )
+        throw new RuntimeException("the method daysOfMonth is is not running [Line: ]");
+    else  // maximale Anzahl der Tage in dem jeweiligen Monat
+    {
+        switch (month) {
+
+            case 2:       // Februar
+                if (isLeapYear(year)) {
+                    numDays = 29;
+                } else {
+                    numDays = 28;
+                }
+                break;
+
+            case 1:       // Januar
+            case 3:       // März
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                numDays = 31;
+                break;
+
+
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                numDays = 30;
+                break;
+
+
+            default:
+                numDays = 0;
+        }
+
+        formattedDate.append(numDays);
+        formattedDate.append(" ");
+    }
     else
     {
         int iY   = year      ;
@@ -62,13 +100,15 @@ public class TimeSheetReport {
 
       StringBuilder  formattedDate = new StringBuilder() ;
 
-      if (iH < 10) { formattedDate.append("0") ; }     //#NOTE Format: yy:
-                     formattedDate.append(iY)  ;
-                     formattedDate.append(".") ;
+
 
       if (iM < 10) { formattedDate.append("0") ; }     //#NOTE Format: mm.
                      formattedDate.append(iM)  ;
                      formattedDate.append(".") ;
+
+                     formattedDate.append(iY)  ;
+                     formattedDate.append(" ") ;       //#NOTE Format: yyyy
+
 
     }
     return formattedDate.toString();
@@ -83,8 +123,8 @@ public class TimeSheetReport {
         int iM    = minutes ;
     //  int iS    = seconds ;
 
-    if (args.length < 1  )
-        throw new RuntimeException("The method formatTime not running [ Line:  ]");
+    if (hours < 1 || minutes < 1  )
+        throw new RuntimeException("The method formatTime is not running [ Line:  ]");
     else
     {
       StringBuilder   formattedTime = new StringBuilder() ;
@@ -107,8 +147,8 @@ public class TimeSheetReport {
 
   // #STUB - <Datum> DD.MM.YYYY
   public static String formatDate(int year, int month, int day) {
-    if (args.length < 1  )
-        throw new RuntimeException("The method formatDate not running [ Line:  ]");
+    if (year < 1 || month < 1 || day < 1 )
+        throw new RuntimeException("The method formatDate is not running [ Line:  ]");
     else
     {
       StringBuilder   printDate = new StringBuilder() ;
@@ -123,8 +163,8 @@ public class TimeSheetReport {
   }
 
   public static String formatDuration(int totalMinutes) {
-    if (args.length < 1  )
-        throw new RuntimeException("The method formatDuration not running [ Line:  ]");
+    if (totalMinutes < 1  )
+        throw new RuntimeException("The method formatDuration is not running [ Line:  ]");
     else {
 
 
@@ -133,7 +173,7 @@ public class TimeSheetReport {
 
   public static String pad(String s, int minLength, boolean prepend) {
     if (args.length < 1  )
-        throw new RuntimeException("The method pad not running [ Line:  ]");
+        throw new RuntimeException("The method pad is not running [ Line:  ]");
     else {
 
 
@@ -142,7 +182,7 @@ public class TimeSheetReport {
 
   public static String padStart(String s, int minLength) {
     if (args.length < 1  )
-        throw new RuntimeException("The method padStart not running [ Line:  ]");
+        throw new RuntimeException("The method padStart is not running [ Line:  ]");
     else {
     }
     
@@ -152,7 +192,7 @@ public class TimeSheetReport {
 
   public static String padEnd(String s, int minLength) {
     if (args.length < 1  )
-        throw new RuntimeException("The method padEnd not running [ Line:  ]");
+        throw new RuntimeException("The method padEnd is not running [ Line:  ]");
     else {
     }
     
@@ -162,7 +202,7 @@ public class TimeSheetReport {
 
   public static int durationInMinutes(int startHours, int startMinutes, int endHours, int endMinutes) {
     if (args.length < 1  )
-        throw new RuntimeException("The method durationInMinutes not running [ Line:  ]");
+        throw new RuntimeException("The method durationInMinutes is not running [ Line:  ]");
     else {
     }
     
@@ -196,7 +236,7 @@ public class TimeSheetReport {
 //#endregion 
 
    //#region // #NOTE  <Footer>
-        System.out.println(THTHIN_BORDER);
+        System.out.println(THIN_BORDER);
 
 
         System.out.printf("Meldung: %s\n", message.trim());
@@ -206,7 +246,7 @@ public class TimeSheetReport {
         System.out.println();
         System.out.println();
 
-        System.out.println(THTHIN_BORDER);
+        System.out.println(THIN_BORDER);
         scanner.close();
 //#endregion
 
